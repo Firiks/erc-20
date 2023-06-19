@@ -59,6 +59,9 @@ module.exports = {
     user1: { // create a named account called user1
       default: 1,
     },
+    user2: {
+      default: 2,
+    },
   },
   solidity: { // manage solidity compiler versions
     compilers: [
