@@ -8,12 +8,13 @@ const { developmentChains, INITIAL_SUPPLY } = require("../../helper-hardhat-conf
     // Multipler is used to make reading the math easier because of the 18 decimal points
     const multiplier = 10 ** 18;
 
-    let ogToken, deployer, user1;
+    let ogToken, deployer, user1, user2;
 
     beforeEach(async function () {
       const accounts = await getNamedAccounts();
       deployer = accounts.deployer;
       user1 = accounts.user1;
+      user2 = accounts.user2;
 
       await deployments.fixture("all");
       ogToken = await ethers.getContract("OgToken", deployer);
@@ -56,7 +57,7 @@ const { developmentChains, INITIAL_SUPPLY } = require("../../helper-hardhat-conf
     describe("allowances", () => {
       const amount = (20 * multiplier).toString();
       beforeEach(async () => {
-        playerToken = await ethers.getContract("OgToken", user1);
+        playerToken = await ethers.getContract("OgToken", user1); // create a new instance of the contract
       });
 
       it("Should approve other address to spend token", async () => {
@@ -89,5 +90,27 @@ const { developmentChains, INITIAL_SUPPLY } = require("../../helper-hardhat-conf
           playerToken.transferFrom(deployer, user1, (40 * multiplier).toString())
         ).to.be.revertedWith("ERC20: insufficient allowance");
       });
+
+      it("allow transfer from user1 to user2", async () => {
+        const tokensToSpend = ethers.utils.parseEther("5");
+
+        // transfer tokens to user1
+        await ogToken.approve(user1, tokensToSpend);
+        await playerToken.transferFrom(deployer, user1, tokensToSpend);
+
+        // get signer for user1
+        const user1Singer = ethers.provider.getSigner(user1);
+      
+        // transfer tokens from user1 to user2
+        await ogToken.connect(user1Singer).approve(user1, tokensToSpend);
+        await ogToken.connect(user1Singer).approve(user2, tokensToSpend);
+        await playerToken.connect(user1Singer).transferFrom(user1, user2, tokensToSpend);
+      
+        // console.log("user1 balance: ", await playerToken.balanceOf(user1));
+        // console.log("user2 balance: ", await playerToken.balanceOf(user2));
+
+        expect(await playerToken.balanceOf(user2)).to.equal(tokensToSpend);
+      });
+
     });
   });
