@@ -39,7 +39,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const MNEMONIC = process.env.MNEMONIC || "Your mnemonic";
 
 // Forking
-const FORKING_BLOCK_NUMBER = parseInt(process.env.FORKING_BLOCK_NUMBER) || 0;
+// const FORKING_BLOCK_NUMBER = parseInt(process.env.FORKING_BLOCK_NUMBER) || 0;
 
 // API keys
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key";
@@ -77,12 +77,12 @@ module.exports = {
   },
   networks: {
   hardhat: {
-      hardfork: "merge",
-      forking: {
-        url: MAINNET_RPC_URL,
-        blockNumber: FORKING_BLOCK_NUMBER,
-        enabled: false,
-      },
+      // hardfork: "merge",
+      // forking: {
+      //   url: MAINNET_RPC_URL,
+      //   blockNumber: FORKING_BLOCK_NUMBER,
+      //   enabled: false,
+      // },
       chainId: 31337,
     },
     localhost: {
