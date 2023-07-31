@@ -6,7 +6,7 @@ ERC20 is a token representation standard on Ethereum blockchain. It is used for 
 
 ## Quick start
 1. Clone the repo
-2. Install dependencies: `npm install`
+2. Install dependencies: `npm install` use `--legacy-peer-deps` when encountering errors
 3. Create .env file from .env.example `cp .env.example .env` and fill in the values
 4. To run tests: `npx hardhat test`
 5. To run local node with contract deployed run: `npm run chain`
