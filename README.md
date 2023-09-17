@@ -10,6 +10,6 @@ ERC20 is a token representation standard on Ethereum blockchain. It is used for 
 3. Create .env file from .env.example `cp .env.example .env` and fill in the values
 4. To run tests: `npx hardhat test`
 5. To run local node with contract deployed run: `npm run chain`
-6. To deploy on testnet: `npm run deploy-sepolia`
+6. To deploy on testnet: `npm run deploy:sepolia`
 
 You can import token contract to metamask by copying the address from the console after deployment and adding it as a custom token.
